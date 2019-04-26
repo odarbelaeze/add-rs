@@ -28,8 +28,7 @@ Sample output file,
 
 ```json
 {
-    "x": 5,
-    "y": 3.5
+    "sum": 8.5,
 }
 ```
 
