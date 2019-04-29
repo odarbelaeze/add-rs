@@ -1,0 +1,21 @@
+language: rust
+rust:
+  - stable
+  - beta
+  - nightly
+matrix:
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
+cache: cargo
+before_deploy:
+  - rustup target add x86_64-unknown-linux-musl
+  - cargo build --target x86_64-unknown-linux-musl --release
+deploy:
+  provider: releases
+  api_key:
+    secure: MAsqFuBkrBzHBI+++9HcQNZ7cHRZPqsippFAvjDQ8cU58ScPjyDGXYEIlrM18R83NnsPM0DeNiHDm9uRD3F7zp1+TUkriIap2tniC+TMi7ODrOuXCoKWLbOpx8BbUux5tT8KVz0UCuI/OQ+1vT9PJcOb8/P3OxokO1M/XQuasihReBZQQdWvHj9OJst0w55KZPL2ru52+bVKyJuZbAE5cwI9CplN3hn4XyMrKZZTX0D5eab3kKXQSL+/JkAv1SShZlrqxY9bneaXMKHWOJGdYkXDoOvI5VP+kon1QXXb+DO1FH/5ArhulTCxLvYkIzuB+qX1rCOHHcY+Q+MvogJmZWiBhDNAaKLxCP81RegGMuLuCMmcQ/Rvw9I/gRvB7bV4bC5In1hEGG+gTL5bLAuCwxFAi+IvLm3xWBZwzfaSX1lagXPVhRBj0sOUMkL5llNZaEE6qOfexcKWL7lLRS1xVp2kUtJi+Vbmyj6J7F3S1VXKZrnGEjPeHzs0k0Il7PjuvDi+NyyLR+qDNbtxreElUH6LzUSEwAJjhUh1lVz8OE9VJVk3wsiCTZXXP5GMooCLWK22ZRztJmcEV9MWFdLZxWzG3gYD7BQM4IlsJirDo/CAVjJFxq8h2ZWyeCEhmxpIpiJ1rdzM3hpctQ65DaHw9rf6o+eud/0sANtMmQOlYow=
+  file: target/x86_64-unknown-linux-musl/release/add
+  skip_cleanup: true
+  on:
+    tags: true
