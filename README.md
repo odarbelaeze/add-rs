@@ -2,34 +2,31 @@
 
 The most advanced code to add a couple of numbers.
 
+## Downloads
+
+You can get a fully static binary of the `add` code that will run in any
+linux computer in the [releases page][releases].
+
 ## Usage
 
 ```
 Add.
 
+Adds two numbers <x> and <y>.
+
 Usage:
-    add <input> <output>
+    add <x> <y>
     add (-h | --help)
 
 Options:
   -h --help     Show this screen.
 ```
 
-Sample input file,
+Sample run,
 
-```json
-{
-    "x": 5,
-    "y": 3.5
-}
-```
-
-Sample output file,
-
-```json
-{
-    "sum": 8.5,
-}
+```bash
+$ add 1 3.5
+4.5
 ```
 
 ## Create a completely static linux binary
@@ -44,3 +41,4 @@ cargo build --target x86_64-unknown-linux-musl --release
 ```
 
 [rust-musl]: https://doc.rust-lang.org/edition-guide/rust-2018/platform-and-target-support/musl-support-for-fully-static-binaries.html
+[releases]: https://github.com/odarbelaeze/add-rs/releases

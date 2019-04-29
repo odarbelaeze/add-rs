@@ -1,15 +1,13 @@
 use docopt::Docopt;
-use serde::{Deserialize, Serialize};
-use serde_json::{from_reader, to_writer_pretty};
-use std::error::Error;
-use std::fs::File;
-use std::io;
+use serde::Deserialize;
 
 const USAGE: &str = "
 Add.
 
+Adds two numbers <x> and <y>.
+
 Usage:
-    add <input> <output>
+    add <x> <y>
     add (-h | --help)
 
 Options:
@@ -18,39 +16,13 @@ Options:
 
 #[derive(Debug, Deserialize)]
 struct Args {
-    arg_input: String,
-    arg_output: String,
+    arg_x: f64,
+    arg_y: f64,
 }
 
-#[derive(Debug, Deserialize)]
-struct InputFormat {
-    x: f64,
-    y: f64,
-}
-
-#[derive(Debug, Serialize)]
-struct OutputFormat {
-    sum: f64,
-}
-
-fn main() -> Result<(), Box<Error>> {
+fn main() {
     let args: Args = Docopt::new(USAGE)
         .and_then(|d| d.deserialize())
         .unwrap_or_else(|e| e.exit());
-    let input: InputFormat = if &args.arg_input == "-" {
-        from_reader(io::stdin())?
-    } else {
-        let input = File::open(args.arg_input)?;
-        from_reader(input)?
-    };
-    let value = OutputFormat {
-        sum: input.x + input.y,
-    };
-    if &args.arg_output == "-" {
-        to_writer_pretty(io::stdout(), &value)?;
-    } else {
-        let output = File::create(args.arg_output)?;
-        to_writer_pretty(output, &value)?;
-    }
-    Ok(())
+    println!("{}", args.arg_x + args.arg_y);
 }
